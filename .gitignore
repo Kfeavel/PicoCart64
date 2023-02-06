@@ -117,3 +117,4 @@ build/
 git_info.h
 
 *.bak
+.DS_Store
