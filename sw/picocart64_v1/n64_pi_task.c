@@ -41,6 +41,21 @@ RINGBUF_CREATE(ringbuf, 64, uint32_t);
 // UART TX buffer
 static uint16_t pc64_uart_tx_buf[PC64_BASE_ADDRESS_LENGTH];
 
+static inline void uart_print_hex_u32(uint32_t word) {
+    uint8_t buf[10];
+
+    for (int i = 0; i < 8; i++) {
+        const uint8_t nibble = word >> 28;
+
+            buf[i] = (nibble > 9) ? 0x37 + nibble : 0x30 + nibble;
+
+            word <<= 4;
+    } buf[8] = '\r';
+    buf[9] = '\n';
+
+    stdio_uart_out_chars(buf, sizeof(buf));
+}
+
 static inline uint32_t resolve_sram_address(uint32_t address)
 {
 	uint32_t bank = (address >> 18) & 0x3;
@@ -62,9 +77,9 @@ static inline uint32_t n64_pi_get_value(PIO pio)
 
 	// Disable to get some more performance. Enable for debugging.
 	// Without ringbuf, ROM access takes 160-180ns. With, 240-260ns.
-#if 0
+#if 1
 	ringbuf_add(ringbuf, value);
-#elif 0
+#elif 1
 	uart_print_hex_u32(value);
 #endif
 
@@ -256,7 +271,7 @@ void n64_pi_run(void)
 			// This way, there won't be a bus conflict in case e.g. a physical N64DD is connected.
 
 			// Enable to log addresses to UART
-#if 0
+#if 1
 			uart_print_hex_u32(last_addr);
 #endif
 

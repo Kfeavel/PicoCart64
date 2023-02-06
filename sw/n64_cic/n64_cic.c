@@ -39,7 +39,7 @@ Data Line, Bidir (DIO):  CIC Pin 15
 #include "sram.h"
 #include "picocart64_pins.h"
 
-// #define DEBUG
+#define DEBUG
 
 #define REGION_NTSC (0)
 #define REGION_PAL  (1)

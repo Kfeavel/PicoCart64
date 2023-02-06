@@ -107,7 +107,7 @@ void second_task_entry(__unused void *params)
 
 		// Set to 1 to print stack watermarks.
 		// Printing is synchronous and interferes with the CIC emulation.
-#if 0
+#if 1
 		// printf("Second task heartbeat: %d\n", count);
 		// vPortYield();
 
